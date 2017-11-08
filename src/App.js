@@ -5,9 +5,10 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    booksCurrent: [],    
-    booksWant: [],    
-    booksRead: [],    
+    ourBooks: {},
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -16,22 +17,45 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false
   }
+  updateBookAPI = (e, book) => {
+    let shelfAddingTo = e.target.value;
+    let shelfRemovingFrom = book.shelf;
 
+    this.setState({
+      //book's shelf property, then update everything based on that change?
+    })
+
+    this.setState({ 
+      ...this.state,
+      [shelfAddingTo]: this.state[shelfAddingTo].concat(book),
+      [shelfRemovingFrom]: this.state[shelfRemovingFrom].filter((el) => {
+        console.log('test')
+        return el.id !== book.id
+      })
+    })
+
+    BooksAPI.update(book, shelfAddingTo)
+  }
   updateBookList = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({
-        booksCurrent: books.filter( book => ( book.shelf === "currentlyReading" )),
-        booksWant: books.filter( book => ( book.shelf === "wantToRead" )),
-        booksRead: books.filter( book => ( book.shelf === "read" )),
+        currentlyReading: books.filter( book => ( book.shelf === "currentlyReading" )),
+        wantToRead: books.filter( book => ( book.shelf === "wantToRead" )),
+        read: books.filter( book => ( book.shelf === "read" )),
       })
     })
   }
   componentDidMount (){
     this.updateBookList()
+
+    //use this to update bookshelves
+    BooksAPI.getAll().then((books) => {
+      this.setState({
+        ourBooks: books
+      })
+    })
   }
   render() {
-    console.log( this.state.booksCurrent[0] )
-    
     return (
       <div className="app">
 
@@ -68,8 +92,11 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {
-                        this.state.booksCurrent.map(function(book){
-                          return <Book key={book.id} details={book} />
+                        this.state.currentlyReading.map( book => {
+                          return <Book key={book.id} 
+                                       onShelfUpdate={ this.updateBookAPI } 
+                                       details={book} 
+                                  />
                         })
                       }
                     </ol>
@@ -80,8 +107,11 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {
-                        this.state.booksWant.map(function(book){
-                          return <Book key={book.id} details={book} />
+                        this.state.wantToRead.map( book => {
+                          return <Book key={book.id} 
+                                       onShelfUpdate={ this.updateBookAPI } 
+                                       details={book} 
+                                  />
                         })
                       }
                     </ol>
@@ -91,11 +121,14 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                        {
-                          this.state.booksRead.map(function(book){
-                            return <Book key={book.id} details={book} />
-                          })
-                        }
+                      {
+                        this.state.read.map( book => {
+                          return <Book key={book.id} 
+                                       onShelfUpdate={ this.updateBookAPI } 
+                                       details={book} 
+                                  />
+                        })
+                      }
                     </ol>
                   </div>
                 </div>
