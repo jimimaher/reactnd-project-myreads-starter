@@ -4,9 +4,6 @@ import React, { Component } from 'react'
 class Book extends Component {
     render(){
         const { details, onShelfUpdate } = this.props;
-        
-        // console.log('details: ' , this.props.details)
-        // console.log(details, 'shelf: '+this.props.shelf)
         return(
             <li>
                 <div className="book">

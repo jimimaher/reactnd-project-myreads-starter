@@ -9,27 +9,19 @@ class BooksApp extends React.Component {
     currentlyReading: [],
     wantToRead: [],
     read: [],
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
     showSearchPage: false
   }
   updateBookAPI = (e, book) => {
     let shelfAddingTo = e.target.value;
     let shelfRemovingFrom = book.shelf;
 
-    this.setState({
-      //book's shelf property, then update everything based on that change?
-    })
-
+    //update the shelf
+    book.shelf = e.target.value;
+    
     this.setState({ 
       ...this.state,
       [shelfAddingTo]: this.state[shelfAddingTo].concat(book),
       [shelfRemovingFrom]: this.state[shelfRemovingFrom].filter((el) => {
-        console.log('test')
         return el.id !== book.id
       })
     })
