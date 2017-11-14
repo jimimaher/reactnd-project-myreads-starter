@@ -1,0 +1,4 @@
+1. Separate search into component page
+2. Show books with search instead of consoling.
+3. Routing
+4. Check everything: https://review.udacity.com/#!/rubrics/918/view

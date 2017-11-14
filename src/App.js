@@ -2,6 +2,7 @@ import React from 'react'
 import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
+import escapeRegExp from 'escape-string-regexp'
 
 class BooksApp extends React.Component {
   state = {
@@ -9,7 +10,8 @@ class BooksApp extends React.Component {
     currentlyReading: [],
     wantToRead: [],
     read: [],
-    showSearchPage: false
+    showSearchPage: false,
+    searchQuery: ''
   }
   updateBookAPI = (e, book) => {
     let shelfAddingTo = e.target.value;
@@ -47,7 +49,22 @@ class BooksApp extends React.Component {
       })
     })
   }
+  updateSearchQuery = (searchQuery) => {
+    this.setState({ searchQuery: searchQuery.trim() })
+  }
   render() {
+    const { searchQuery } = this.state
+    
+    if (searchQuery) {
+      //show only those that match
+      const match = new RegExp(escapeRegExp(searchQuery), 'i')
+      let showingContacts = this.state.ourBooks.filter((book) => match.test(book.title) || match.test(book.authors))
+      console.log(showingContacts)
+    } else {
+      //show all
+      console.log(this.state.ourBooks)
+    }
+
     return (
       <div className="app">
 
@@ -64,7 +81,12 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
+                <input 
+                  type="text" 
+                  placeholder="Search by title or author"
+                  value={ this.state.searchQuery }
+                  onChange={(event) => this.updateSearchQuery(event.target.value)}
+                />
 
               </div>
             </div>
