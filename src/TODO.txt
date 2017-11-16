@@ -1,8 +1,8 @@
 To do:
-- For search, make sure using all books instead of just "ourBooks" 
-- Separate search into component page.
 - Routing.
+- For search, make sure using all books instead of just "ourBooks" 
 - Check everything: https://review.udacity.com/#!/rubrics/918/view
 
 Done:
+- Separate search into component page.
 - Show books with search instead of consoling.
