@@ -6,6 +6,7 @@ import escapeRegExp from 'escape-string-regexp'
 
 class BooksApp extends React.Component {
   state = {
+    allBooks: {},
     ourBooks: {},
     currentlyReading: [],
     wantToRead: [],
@@ -53,16 +54,16 @@ class BooksApp extends React.Component {
     this.setState({ searchQuery: searchQuery.trim() })
   }
   render() {
+    let booksFound;
     const { searchQuery } = this.state
     
     if (searchQuery) {
       //show only those that match
       const match = new RegExp(escapeRegExp(searchQuery), 'i')
-      let showingContacts = this.state.ourBooks.filter((book) => match.test(book.title) || match.test(book.authors))
-      console.log(showingContacts)
+      booksFound = this.state.ourBooks.filter((book) => match.test(book.title))
     } else {
       //show all
-      console.log(this.state.ourBooks)
+      booksFound = this.state.ourBooks
     }
 
     return (
@@ -87,11 +88,21 @@ class BooksApp extends React.Component {
                   value={ this.state.searchQuery }
                   onChange={(event) => this.updateSearchQuery(event.target.value)}
                 />
-
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <ol className="books-grid">
+                    {
+                      booksFound.length !== 0 && (
+                        booksFound.map( book => {
+                          return <Book key={book.id} 
+                                      onShelfUpdate={ this.updateBookAPI } 
+                                      details={book} 
+                                  />
+                        })
+                      )
+                    }
+              </ol>
             </div>
           </div>
         ) : (
