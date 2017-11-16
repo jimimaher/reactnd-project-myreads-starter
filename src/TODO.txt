@@ -4,5 +4,6 @@ To do:
 - Check everything: https://review.udacity.com/#!/rubrics/918/view
 
 Done:
+- Make home a new component (for cleaner routing)
 - Separate search into component page.
 - Show books with search instead of consoling.
