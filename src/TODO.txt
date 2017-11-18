@@ -1,9 +1,10 @@
 To do:
-- Routing.
-- For search, make sure using all books instead of just "ourBooks" 
+- Dropdown in search to reflect shelf after refresh (Add books from search to "ourBooks"?) 
 - Check everything: https://review.udacity.com/#!/rubrics/918/view
 
 Done:
+- Routing.
+- For search, make sure using 'all' books instead of just "ourBooks" 
 - Make home a new component (for cleaner routing)
 - Separate search into component page.
 - Show books with search instead of consoling.
