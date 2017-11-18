@@ -14,7 +14,7 @@ class BooksApp extends React.Component {
     read: [],
     showSearchPage: false
   }
-  updateBookAPI = (e, book) => {
+  updateBookAPIandView = (e, book) => {
     let shelfAddingTo = e.target.value || undefined;
     let shelfRemovingFrom = book.shelf || undefined;
     
@@ -73,7 +73,7 @@ class BooksApp extends React.Component {
   HomeWithProps = (props) => {
     return(
       <Home 
-        updateBookAPI={this.updateBookAPI}
+        updateBook={this.updateBookAPIandView}
         currentlyReading={this.state.currentlyReading}
         wantToRead={this.state.wantToRead}
         read={this.state.read}
@@ -83,7 +83,7 @@ class BooksApp extends React.Component {
   SearchWithProps = (props) => {
     return(
       <Search 
-        updateBookAPI={this.updateBookAPI}
+        updateBook={this.updateBookAPIandView}
         allBooks={this.state.allBooks}
       />
     )

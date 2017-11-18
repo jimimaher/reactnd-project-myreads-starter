@@ -14,7 +14,7 @@ class Search extends React.Component {
     render() {
         let booksFound;
         const { searchQuery } = this.state
-        const { allBooks, updateBookAPI } = this.props
+        const { allBooks, updateBook } = this.props
         
         if (searchQuery) {
           //show only those that match
@@ -52,7 +52,7 @@ class Search extends React.Component {
                     booksFound.length !== undefined && (
                         booksFound.map( book => {
                             return <Book key={book.id} 
-                                        onShelfUpdate={ updateBookAPI } 
+                                        onShelfUpdate={ updateBook } 
                                         details={book} 
                                     />
                         })

@@ -9,7 +9,7 @@ class Home extends React.Component {
     }
     render() {
         const { 
-            updateBookAPI,
+            updateBook,
             currentlyReading, 
             wantToRead, 
             read
@@ -29,7 +29,7 @@ class Home extends React.Component {
                       {
                         currentlyReading.map( book => {
                           return <Book key={book.id} 
-                                       onShelfUpdate={ updateBookAPI } 
+                                       onShelfUpdate={ updateBook } 
                                        details={book} 
                                   />
                         })
@@ -44,7 +44,7 @@ class Home extends React.Component {
                       {
                         wantToRead.map( book => {
                           return <Book key={book.id} 
-                                       onShelfUpdate={ updateBookAPI } 
+                                       onShelfUpdate={ updateBook } 
                                        details={book} 
                                   />
                         })
@@ -59,7 +59,7 @@ class Home extends React.Component {
                       {
                         read.map( book => {
                           return <Book key={book.id} 
-                                       onShelfUpdate={ updateBookAPI } 
+                                       onShelfUpdate={ updateBook } 
                                        details={book} 
                                   />
                         })

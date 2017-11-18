@@ -1,3 +1,19 @@
+# MyReads Project - James Maher
+
+This project was setup with the starter template provided by Udacity. 
+
+The way to install the project is first to run `npm install` and then `npm start`. The project homepage will then open in a browser after a moment or two. 
+
+## Components
+- **App.js**: controls routing and functions to be used in child components. Book shelf updates are maintained in local state for fast UI and also updated on server. 
+- **Home.js**: homepage, includes the three shelves with book components and props from main App. Book shelves persist with page refresh.
+- **Search.js**: search page, includes books as components returned from `BookAPI.search` and filtered by user input. Also includes props from main App.
+- **Book.js**: renders a book with control methods passed down as props. Changing a shelf on Search or Home will update the app state (and server), thus show the update on all views.
+&nbsp;
+###### Note: below here is the documentation provided with the app.
+&nbsp;
+______
+______
 # MyReads Project
 
 This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
