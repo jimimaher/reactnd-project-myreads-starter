@@ -32,7 +32,9 @@ class Book extends Component {
             </div>
           </div>
           <div className="book-title">{details.title}</div>
-          <div className="book-authors">{details.authors.join(', ')}</div>
+          { details.authors !== undefined && (
+            <div className="book-authors">{details.authors.join(', ')}</div>
+          )}
         </div>
       </li>
     );

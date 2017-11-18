@@ -11,8 +11,7 @@ class BooksApp extends React.Component {
     ourBooks: {},
     currentlyReading: [],
     wantToRead: [],
-    read: [],
-    showSearchPage: false
+    read: []
   };
   updateBookAPIandView = (e, book) => {
     //update View
@@ -55,13 +54,6 @@ class BooksApp extends React.Component {
         ),
         wantToRead: books.filter(book => book.shelf === 'wantToRead'),
         read: books.filter(book => book.shelf === 'read')
-      });
-    });
-    //populate books to be used in search
-    BooksAPI.search('Art', 20).then(response => {
-      console.log(response);
-      this.setState({
-        allBooks: response
       });
     });
   };
