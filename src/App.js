@@ -1,7 +1,6 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import MockAPI from './mockBooks'
 import './App.css'
 import Home from './Home'
 import Search from './Search'
@@ -15,26 +14,34 @@ class BooksApp extends React.Component {
     read: [],
     showSearchPage: false
   }
-  setShowSearchPageBool = (boolShow = true) => {
-    this.setState({
-      showSearchPage: boolShow
-    })
-  }
   updateBookAPI = (e, book) => {
-    let shelfAddingTo = e.target.value;
-    let shelfRemovingFrom = book.shelf;
-
-    //update the shelf
-    book.shelf = e.target.value;
+    let shelfAddingTo = e.target.value || undefined;
+    let shelfRemovingFrom = book.shelf || undefined;
     
-    this.setState({ 
-      ...this.state,
-      [shelfAddingTo]: this.state[shelfAddingTo].concat(book),
-      [shelfRemovingFrom]: this.state[shelfRemovingFrom].filter((el) => {
-        return el.id !== book.id
+    //update the shelf
+    book.shelf = e.target.value || 'none';
+    
+    if( shelfAddingTo === 'none' ){
+      this.setState({ 
+        ...this.state,
+        [shelfRemovingFrom]: this.state[shelfRemovingFrom].filter((el) => {
+          return el.id !== book.id
+        })
       })
-    })
-
+    } else if ( shelfRemovingFrom === undefined ) {
+      this.setState({
+        ...this.state,
+        [shelfAddingTo]: this.state[shelfAddingTo].concat(book),
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        [shelfAddingTo]: this.state[shelfAddingTo].concat(book),
+        [shelfRemovingFrom]: this.state[shelfRemovingFrom].filter((el) => {
+          return el.id !== book.id
+        })
+      })
+    }
     BooksAPI.update(book, shelfAddingTo)
   }
   updateBookList = () => {
@@ -55,33 +62,40 @@ class BooksApp extends React.Component {
         ourBooks: books
       })
     })
-    if( this.state.ourBooks.length === undefined ){
+    //use this to update bookshelves
+    BooksAPI.search('Art', 20).then((response) => {
+      console.log(response)
       this.setState({
-        ourBooks: MockAPI
+        allBooks: response
       })
-    }
+    })
   }
-
+  HomeWithProps = (props) => {
+    return(
+      <Home 
+        updateBookAPI={this.updateBookAPI}
+        currentlyReading={this.state.currentlyReading}
+        wantToRead={this.state.wantToRead}
+        read={this.state.read}
+      />
+    )
+  }
+  SearchWithProps = (props) => {
+    return(
+      <Search 
+        updateBookAPI={this.updateBookAPI}
+        allBooks={this.state.allBooks}
+      />
+    )
+  }
   render() {
-
     return (
-      <div className="app">
-
-        {this.state.showSearchPage ? (
-          <Search 
-            ourBooks={this.state.ourBooks}
-            setShowSearchPageBool={this.setShowSearchPageBool}
-            />
-        ) : (
-          <Home 
-            updateBookAPI={this.updateBookAPI}
-            currentlyReading={this.state.currentlyReading}
-            wantToRead={this.state.wantToRead}
-            read={this.state.read}
-            setShowSearchPageBool={this.setShowSearchPageBool}
-          />
-        )}
-      </div>
+      <Router>
+        <div className="app">
+          <Route exact path='/' component={this.HomeWithProps}/>
+          <Route exact path='/search' component={this.SearchWithProps}/>
+        </div>
+      </Router>
     )
   }
 }

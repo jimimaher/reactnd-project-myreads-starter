@@ -2,6 +2,7 @@ import React from 'react'
 import Book from './Book'
 import './App.css'
 import escapeRegExp from 'escape-string-regexp'
+import { Link } from 'react-router-dom'
 
 class Search extends React.Component {
     state = {
@@ -13,21 +14,21 @@ class Search extends React.Component {
     render() {
         let booksFound;
         const { searchQuery } = this.state
-        const { ourBooks, setShowSearchPageBool } = this.props
+        const { allBooks, updateBookAPI } = this.props
         
         if (searchQuery) {
           //show only those that match
           const match = new RegExp(escapeRegExp(searchQuery), 'i')
-          booksFound = ourBooks.filter((book) => match.test(book.title))
+          booksFound = allBooks.filter((book) => match.test(book.title))
         } else {
           //show all
-          booksFound = ourBooks
+          booksFound = allBooks
         }
 
         return (
           <div className="search-books">
           <div className="search-books-bar">
-            <a className="close-search" onClick={() => setShowSearchPageBool(false)}>Close</a>
+            <Link className="close-search" to='/'>Close</Link>
             <div className="search-books-input-wrapper">
               {/*
                 NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -51,7 +52,7 @@ class Search extends React.Component {
                     booksFound.length !== undefined && (
                         booksFound.map( book => {
                             return <Book key={book.id} 
-                                        onShelfUpdate={ this.updateBookAPI } 
+                                        onShelfUpdate={ updateBookAPI } 
                                         details={book} 
                                     />
                         })

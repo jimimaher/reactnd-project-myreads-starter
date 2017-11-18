@@ -1,6 +1,7 @@
 import React from 'react'
 import Book from './Book'
 import './App.css'
+import { Link } from 'react-router-dom'
 
 class Home extends React.Component {
     state = {
@@ -8,11 +9,10 @@ class Home extends React.Component {
     }
     render() {
         const { 
-            updateBookAPI, 
+            updateBookAPI,
             currentlyReading, 
             wantToRead, 
-            read, 
-            setShowSearchPageBool 
+            read
         } = this.props;
 
         return(
@@ -29,7 +29,7 @@ class Home extends React.Component {
                       {
                         currentlyReading.map( book => {
                           return <Book key={book.id} 
-                                       onShelfUpdate={ this.updateBookAPI } 
+                                       onShelfUpdate={ updateBookAPI } 
                                        details={book} 
                                   />
                         })
@@ -44,7 +44,7 @@ class Home extends React.Component {
                       {
                         wantToRead.map( book => {
                           return <Book key={book.id} 
-                                       onShelfUpdate={ this.updateBookAPI } 
+                                       onShelfUpdate={ updateBookAPI } 
                                        details={book} 
                                   />
                         })
@@ -70,7 +70,7 @@ class Home extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => setShowSearchPageBool(true)}>Add a book</a>
+                <Link to='/search'>Add a book</Link>
             </div>
           </div>
         )
