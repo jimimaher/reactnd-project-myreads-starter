@@ -15,7 +15,7 @@ class Search extends React.Component {
         let booksFound;
         const { searchQuery } = this.state
         const { allBooks, updateBook } = this.props
-        
+
         if (searchQuery) {
           //show only those that match
           const match = new RegExp(escapeRegExp(searchQuery), 'i')
@@ -38,8 +38,8 @@ class Search extends React.Component {
                 However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                 you don't find a specific author or title. Every search is limited by search terms.
               */}
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Search by title or author"
                 value={ this.state.searchQuery }
                 onChange={(event) => this.updateSearchQuery(event.target.value)}
@@ -51,9 +51,9 @@ class Search extends React.Component {
                   {
                     booksFound.length !== undefined && (
                         booksFound.map( book => {
-                            return <Book key={book.id} 
-                                        onShelfUpdate={ updateBook } 
-                                        details={book} 
+                            return <Book key={book.id}
+                                        onShelfUpdate={ updateBook }
+                                        details={book}
                                     />
                         })
                     )

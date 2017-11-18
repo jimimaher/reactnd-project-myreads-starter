@@ -8,10 +8,10 @@ class Home extends React.Component {
 
     }
     render() {
-        const { 
+        const {
             updateBook,
-            currentlyReading, 
-            wantToRead, 
+            currentlyReading,
+            wantToRead,
             read
         } = this.props;
 
@@ -28,9 +28,9 @@ class Home extends React.Component {
                     <ol className="books-grid">
                       {
                         currentlyReading.map( book => {
-                          return <Book key={book.id} 
-                                       onShelfUpdate={ updateBook } 
-                                       details={book} 
+                          return <Book key={book.id}
+                                       onShelfUpdate={ updateBook }
+                                       details={book}
                                   />
                         })
                       }
@@ -43,9 +43,9 @@ class Home extends React.Component {
                     <ol className="books-grid">
                       {
                         wantToRead.map( book => {
-                          return <Book key={book.id} 
-                                       onShelfUpdate={ updateBook } 
-                                       details={book} 
+                          return <Book key={book.id}
+                                       onShelfUpdate={ updateBook }
+                                       details={book}
                                   />
                         })
                       }
@@ -58,9 +58,9 @@ class Home extends React.Component {
                     <ol className="books-grid">
                       {
                         read.map( book => {
-                          return <Book key={book.id} 
-                                       onShelfUpdate={ updateBook } 
-                                       details={book} 
+                          return <Book key={book.id}
+                                       onShelfUpdate={ updateBook }
+                                       details={book}
                                   />
                         })
                       }
