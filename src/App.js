@@ -15,12 +15,12 @@ class BooksApp extends React.Component {
     showSearchPage: false
   };
   updateBookAPIandView = (e, book) => {
+    //update View
     let shelfAddingTo = e.target.value || undefined;
     let shelfRemovingFrom = book.shelf || undefined;
-
-    //update the shelf
     book.shelf = e.target.value || 'none';
 
+    //only update the shelves in play
     if (shelfAddingTo === 'none') {
       this.setState({
         ...this.state,
@@ -42,11 +42,14 @@ class BooksApp extends React.Component {
         })
       });
     }
+    //then update API
     BooksAPI.update(book, shelfAddingTo);
   };
-  updateBookList = () => {
+  updateBookLists = () => {
+    //set up state with our books and shelves
     BooksAPI.getAll().then(books => {
       this.setState({
+        ourBooks: books,
         currentlyReading: books.filter(
           book => book.shelf === 'currentlyReading'
         ),
@@ -54,23 +57,16 @@ class BooksApp extends React.Component {
         read: books.filter(book => book.shelf === 'read')
       });
     });
-  };
-  componentDidMount() {
-    this.updateBookList();
-
-    //use this to update bookshelves
-    BooksAPI.getAll().then(books => {
-      this.setState({
-        ourBooks: books
-      });
-    });
-    //use this to update bookshelves
+    //populate books to be used in search
     BooksAPI.search('Art', 20).then(response => {
       console.log(response);
       this.setState({
         allBooks: response
       });
     });
+  };
+  componentDidMount() {
+    this.updateBookLists();
   }
   HomeWithProps = props => {
     return (
