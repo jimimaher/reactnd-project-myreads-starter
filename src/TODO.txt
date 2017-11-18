@@ -1,10 +1,14 @@
 To do:
-- Dropdown in search to reflect shelf after refresh (Add books from search to "ourBooks"?) 
+- Create book "shelf" component
+- You need to use the debounce algorithm to prevent multiple calls to the API
+- Dropdown in search to reflect shelf after refresh (Add books from search to "ourBooks"?)
 - Check everything: https://review.udacity.com/#!/rubrics/918/view
 
 Done:
+- You need to use the API to search the books in the server and not in your current books
+- You need to create another object on your state called books (called matchedBooks)
 - Routing.
-- For search, make sure using 'all' books instead of just "ourBooks" 
+- For search, make sure using 'all' books instead of just "ourBooks"
 - Make home a new component (for cleaner routing)
 - Separate search into component page.
 - Show books with search instead of consoling.
